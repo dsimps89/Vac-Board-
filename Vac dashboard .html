@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Veteran Operations & Tracking Board - Grid Rebuild</title>
+<style>
+:root{
+  --navy:#061d44; --red:#c8201d; --blue:#2d6591; --teal:#07847d; --green:#08775f;
+  --orange:#e57920; --gold:#efa414; --purple:#6e3f91; --line:#bfc8d5; --ink:#061632;
+  --w:1536px; --h:1024px;
+}
+*{box-sizing:border-box} html,body{margin:0;background:#e8edf4;color:var(--ink);font-family:Arial,Helvetica,sans-serif;}
+.toolbar{background:var(--navy);color:#fff;padding:8px 12px;display:flex;gap:8px;align-items:center;font-size:13px;position:sticky;top:0;z-index:50}.toolbar button{background:#fff;color:var(--navy);border:0;border-radius:5px;padding:6px 10px;font-weight:800;cursor:pointer}
+.sheet{width:var(--w);height:var(--h);margin:0 auto 24px;background:#fff;box-shadow:0 4px 22px #0004;overflow:hidden;padding:16px 16px 14px;display:grid;grid-template-rows:199px 407px 263px 101px;gap:6px;}
+.header{position:relative;display:grid;grid-template-columns:263px 1fr 242px;grid-template-rows:62px 82px 49px;column-gap:10px;}
+.canada{grid-column:1;grid-row:1;font-family:Georgia,serif;font-size:42px;white-space:nowrap;align-self:start}.flag{font-family:Arial;color:#e31d1b;font-size:45px;margin-right:8px}.canada sup{color:#d71920;font-size:17px}.vac{grid-column:3;grid-row:1;text-align:right;color:var(--navy);font-size:44px;font-weight:900;line-height:.9}.vac small{font-size:15px;font-weight:700;display:inline-block;text-align:right;line-height:1.1;margin-right:12px}.vline{display:inline-block;height:36px;border-left:1px solid #8997aa;margin-right:12px;vertical-align:middle}.mainTitle{position:absolute;left:302px;top:0;width:900px;text-align:center;color:var(--navy);font-size:42px;font-weight:900;letter-spacing:1.8px;white-space:nowrap;line-height:1}.mainSub{position:absolute;left:430px;top:46px;width:720px;text-align:center;color:var(--red);font-size:22px;font-weight:900;letter-spacing:3px;white-space:nowrap}.tagline{position:absolute;left:390px;top:76px;width:760px;text-align:center;font-size:16px;letter-spacing:.8px}.leaf{color:#d20b0b;font-size:24px}.leaf.l{position:absolute;left:342px;top:62px}.leaf.r{position:absolute;right:342px;top:62px}.served{grid-column:1;grid-row:2;width:255px;height:82px;background:var(--navy);color:#fff;border-radius:7px;display:flex;gap:13px;align-items:center;padding:10px 13px;align-self:center}.served .soldier{font-size:48px}.served .txt{font-size:16px;font-weight:900;line-height:1.55}.board{grid-column:3;grid-row:2;background:var(--navy);color:#fff;border-radius:5px;width:224px;height:42px;justify-self:end;text-align:center;font-weight:900;line-height:1.05;padding-top:5px}.board b{font-size:18px}.board span{font-size:12px}.top-panels{position:absolute;left:270px;right:0;bottom:0;display:grid;grid-template-columns:438px 275px 330px 143px;gap:10px;height:110px}
+.box{border:1.8px solid var(--blue);border-radius:8px;background:#fff;overflow:hidden;position:relative}.redBox{border-color:#e0443c}.tealBox{border-color:var(--teal)}.box h2{margin:0;text-align:center;color:var(--navy);font-size:16px;line-height:1;padding:7px 4px 0;font-weight:900}.box .sub{font-size:10px;text-align:center;margin-top:3px}.tiny{font-size:10px}.formgrid{display:grid;grid-template-columns:auto 1fr auto 1fr;gap:8px 7px;padding:14px 10px 0;font-size:11px;font-weight:800;align-items:center}.case .formgrid{grid-template-columns:auto 1fr;padding-top:14px}.field{border:0;border-bottom:1.3px solid #33445b;background:transparent;height:17px;outline:none;font:11px Arial;padding:0 3px;min-width:0}.field:focus, textarea:focus{background:#fff9cf}.checks{display:flex;gap:6px;align-items:center;white-space:nowrap}.checks label{font-weight:400}.check{width:12px;height:12px;margin:0 2px 0 0;vertical-align:middle}.statusbar{display:grid;grid-template-columns:repeat(5,1fr);gap:2px;padding:10px 13px 0;text-align:center;border-top:1.4px solid #97a3b3;margin:12px 18px 0}.statusItem{font-size:9px;font-weight:700;line-height:1.05;cursor:pointer}.statusItem input{display:none}.badge{width:34px;height:34px;border-radius:50%;margin:0 auto 4px;display:grid;place-items:center;color:#fff;font-size:21px;font-weight:900;border:2px solid #fff;box-shadow:0 0 0 1.5px #35445e}.statusItem input:checked+.badge{outline:3px solid #111}.bgGreen{background:#08775f}.bgGold{background:#f5a511}.bgOrange{background:#e67820}.bgRed{background:#db2923}.bgPurple{background:#6a3e91}.dateBox .dateHint{text-align:center;font-weight:900;font-size:13px;margin-top:23px;letter-spacing:1px}.dateBox input{position:absolute;left:20px;right:20px;bottom:17px;text-align:center;letter-spacing:2px;font-weight:800}
+.middle{display:grid;grid-template-columns:515px 424px 548px;gap:8px}.lower{display:grid;grid-template-columns:305px 348px 313px;gap:6px;margin-left:523px}.lower .box{height:263px}.benefits{height:680px;grid-row:1 / span 2;padding:0 8px}.benefitHead{display:grid;grid-template-columns:245px 1fr;align-items:start}.benefits h2{text-align:left;padding-left:3px}.benefits .sub{text-align:left;margin-left:4px}.legend{display:grid;grid-template-columns:repeat(6,1fr);gap:2px;padding-top:37px}.legend span{text-align:center;font-size:7.5px;line-height:1}.dot{display:block;margin:0 auto 3px;width:10px;height:10px;border-radius:50%;border:1.5px solid currentColor}.c1{color:#e57920}.c2{color:#efa414}.c3{color:#1f4d82}.c4{color:#00785c}.c5{color:#db251c}.c6{color:#6e358d}table{border-collapse:collapse;width:100%;table-layout:fixed}.benefitTable{margin-top:4px;font-size:9.2px}.benefitTable th{border:1px solid var(--line);height:27px;background:#fbfdff;font-size:8px;color:var(--navy);line-height:1}.benefitTable td{border:1px solid #d2d9e3;height:17.4px;font-weight:800;line-height:1;padding:0}.code{width:45px;text-align:center}.prog{width:204px;padding-left:6px!important}.stat{text-align:center;width:41px}.radioDot{appearance:none;width:11px;height:11px;border:1.5px solid currentColor;border-radius:50%;background:#fff;margin:0;vertical-align:middle;cursor:pointer}.radioDot:checked{background:radial-gradient(circle at center,currentColor 0 43%,transparent 47%)}.addline{font-size:11px;font-weight:900;margin:8px 4px 0}.wideLine{display:inline-block;border-bottom:1.2px solid #48586d;width:340px;height:14px}.noteLines{height:24px;margin:6px 4px 0;border-top:1px solid #b7c0cd;border-bottom:1px solid #b7c0cd}.docTable{margin:20px 8px 0;width:calc(100% - 16px);font-size:9.4px}.docTable th{height:28px;border:1px solid #c0cad8;font-size:8.5px;color:var(--navy)}.docTable td{height:32.5px;border:1px solid #d2d8e0;padding:0 3px;line-height:1.05}.docName{width:170px}.docIcon{display:inline-block;width:26px;text-align:center;font-size:16px;color:var(--navy)}.sq{width:13px;height:13px}.notesInput{width:100%;border:0;background:transparent;outline:none}.apptTable{margin:17px 10px 0;width:calc(100% - 20px);font-size:9px}.apptTable th{height:23px;border:1px solid #b7c4d2;color:var(--navy)}.apptTable td{height:33px;border:1px solid #cfd6df;padding:0}.apptTable input{width:100%;height:100%;border:0;background:transparent;outline:none;font-size:11px}.statusMark{display:grid;place-items:center;margin:auto;width:14px;height:14px;border-radius:50%;border:1.4px solid currentColor;font-size:9px;font-weight:900;line-height:1}.follow{position:absolute;left:18px;right:18px;bottom:12px;font-size:12px;font-weight:900}.follow input{border:0;border-bottom:1.2px solid #34445b;background:transparent;height:17px;outline:none}.actionTable{display:grid;grid-template-columns:52px 1fr 64px 31px;margin:24px 8px 0;border:1px solid #c0cbd8;height:195px}.actionTable>div{border-right:1px solid #c9d2dc;border-bottom:1px solid #c9d2dc;font-size:10px}.actionTable>div:nth-child(4n){border-right:0}.headCell{font-weight:900;text-align:center;padding-top:8px;font-size:9px}.prio{color:#fff;font-weight:900;display:grid;place-items:center;font-size:12px}.high{background:#d9140e}.medium{background:#f0a015}.low{background:#078065}.cellInput{width:100%;height:100%;border:0;background:transparent;text-align:center;outline:none}.doneCell{display:grid;place-items:center}.notes .noteArea{position:absolute;left:11px;right:11px;top:49px;bottom:9px;background:repeating-linear-gradient(to bottom,rgba(255,255,255,.82) 0,rgba(255,255,255,.82) 23px,#b8c1cc 24px);z-index:2}.notes textarea{width:100%;height:100%;border:0;background:transparent;resize:none;outline:none;line-height:24px;font-size:13px;padding:2px 6px}.ghostLeaf{position:absolute;left:82px;top:65px;font-size:150px;color:#0b2d5f0d}.ghostFam{position:absolute;right:48px;bottom:20px;font-size:85px;color:#0b2d5f18}.contactList{font-size:11.5px;font-weight:800;line-height:1.85;padding:10px 16px 0}.contactIcon{display:inline-block;width:25px;text-align:center;color:var(--navy);font-size:16px}.contactList input{width:145px;border:0;border-bottom:1.2px solid #34445b;background:transparent;outline:none}.footer{display:grid;grid-template-columns:229px 230px 234px 212px 286px 1fr;gap:3px}.step{border:1.8px solid #4a7aa0;border-radius:7px;background:#fff;position:relative;overflow:hidden}.num{position:absolute;left:12px;top:10px;width:31px;height:31px;border-radius:50%;color:#fff;font-size:23px;font-weight:900;text-align:center;line-height:31px}.step h3{position:absolute;left:60px;top:13px;margin:0;font-size:13px;white-space:nowrap}.step p{position:absolute;left:60px;top:37px;margin:0;width:150px;font-size:10.5px;line-height:1.3}.bigIcon{position:absolute;left:22px;bottom:10px;font-size:38px;color:var(--navy)}.thanks{background:var(--navy);color:#fff;clip-path:polygon(10% 0,77% 0,66% 100%,0 100%);font-size:13px;font-weight:900;line-height:1.6;text-align:center;padding-top:16px;position:relative}.family{position:absolute;right:14px;top:8px;color:var(--navy);font-size:70px;letter-spacing:-10px}.n1{background:#078060}.n2{background:#18518a}.n3{background:#704895}.n4{background:#db5a13}.n5{background:#078060}
+@media(max-width:1535px){.viewport{width:100vw;overflow:auto}.sheet{margin:0 0 24px}}@media print{.toolbar{display:none}.sheet{box-shadow:none;margin:0;zoom:.62}body{background:#fff}*{print-color-adjust:exact;-webkit-print-color-adjust:exact}@page{size:landscape;margin:0}}
+
+/* === VAC GEOMETRY + PRINT PASS V7 ===
+   Purpose: lock the board to the original 1536x1024 geometry on screen,
+   and center-scale it cleanly onto one landscape Letter PDF page.
+*/
+html,body{
+  min-width:1536px;
+  min-height:1024px;
+  overflow:auto;
+  background:#e8edf4;
+}
+.viewport{
+  width:1536px;
+  margin:0 auto;
+  overflow:visible;
+}
+.sheet{
+  width:1536px!important;
+  height:1024px!important;
+  min-width:1536px!important;
+  min-height:1024px!important;
+  max-width:1536px!important;
+  max-height:1024px!important;
+  margin:0 auto 24px!important;
+  transform:none!important;
+  zoom:1!important;
+  padding:16px 16px 14px!important;
+  grid-template-rows:199px 407px 263px 101px!important;
+  gap:6px!important;
+}
+/* stronger fixed geometry */
+.header{height:199px!important;}
+.top-panels{height:110px!important;grid-template-columns:438px 275px 330px 143px!important;}
+.middle{height:407px!important;grid-template-columns:515px 424px 548px!important;gap:8px!important;}
+.lower{height:263px!important;grid-template-columns:305px 348px 313px!important;gap:6px!important;margin-left:523px!important;}
+.footer{height:101px!important;grid-template-columns:229px 230px 234px 212px 286px 1fr!important;gap:3px!important;}
+.benefits{height:680px!important;}
+.docs,.appt{height:407px!important;}
+.lower .box{height:263px!important;}
+.benefitTable td{height:17.35px!important;font-size:9px!important;line-height:1!important;}
+.benefitTable th{height:27px!important;}
+.docTable td{height:32.4px!important;}
+.apptTable td{height:33px!important;}
+.actionTable{height:195px!important;}
+/* prevent browser font/emoji expansion from forcing drift */
+.canada,.vac,.mainTitle,.mainSub,.tagline,.served,.board,.box,.step,.thanks{flex-shrink:0!important;}
+.box{overflow:hidden!important;}
+input,textarea,button{font-family:Arial,Helvetica,sans-serif!important;}
+
+/* screen convenience: allow horizontal scroll on smaller screens without reflowing the board */
+@media screen and (max-width:1535px){
+  html,body{min-width:0!important;}
+  .viewport{width:1536px!important;margin:0!important;overflow:visible!important;}
+  body{overflow:auto!important;}
+}
+
+/* Print/PDF: one clean Letter landscape page.
+   The board aspect ratio is 3:2, so it is centered on Letter landscape with
+   small top/bottom white margins rather than distorted. */
+@media print{
+  @page{size:Letter landscape;margin:0;}
+  html,body{
+    width:11in!important;
+    height:8.5in!important;
+    min-width:0!important;
+    min-height:0!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    background:#fff!important;
+  }
+  .toolbar{display:none!important;}
+  .viewport{
+    position:fixed!important;
+    inset:0!important;
+    width:11in!important;
+    height:8.5in!important;
+    overflow:hidden!important;
+    margin:0!important;
+    background:#fff!important;
+  }
+  .sheet{
+    position:absolute!important;
+    left:50%!important;
+    top:50%!important;
+    width:1536px!important;
+    height:1024px!important;
+    min-width:1536px!important;
+    min-height:1024px!important;
+    margin:0!important;
+    padding:16px 16px 14px!important;
+    box-shadow:none!important;
+    transform:translate(-50%,-50%) scale(0.6875)!important;
+    transform-origin:center center!important;
+    zoom:1!important;
+  }
+  *{print-color-adjust:exact!important;-webkit-print-color-adjust:exact!important;}
+}
+
+</style>
+</head>
+<body>
+<div class="toolbar"><b>VAC Board V7 - geometry and print fixed</b><button onclick="window.print()">Print / PDF</button><button onclick="localStorage.removeItem('votbVacV7');location.reload()">Clear saved data</button><span>Autosaves locally.</span></div>
+<div class="viewport"><main class="sheet">
+<header class="header">
+  <div class="canada"><span class="flag">▌🍁▌</span>Canada<sup>▴</sup></div>
+  <div class="mainTitle">VETERAN OPERATIONS &amp; TRACKING BOARD</div>
+  <div class="mainSub">PERSONAL BENEFITS &amp; CASE MANAGEMENT DASHBOARD</div>
+  <div class="tagline">This board is for <b>YOU</b>. Track your progress. Check your status. Take control of your journey.</div>
+  <div class="leaf l">🍁</div><div class="leaf r">🍁</div>
+  <div class="vac"><small>Veterans Affairs<br>Canada</small><span class="vline"></span>VAC</div>
+  <div class="served"><div class="soldier">♟</div><div class="txt">YOU SERVED.<br>YOU DESERVE SUPPORT.<br>WE'RE HERE TO HELP.</div></div>
+  <div class="board"><b>BOARD 2 OF 3</b><br><span>PERSONAL OPERATIONS BOARD</span></div>
+  <div class="top-panels">
+    <section class="box"><h2>VETERAN INFORMATION <span class="tiny">(OPTIONAL)</span></h2><div class="formgrid"><label>Name:</label><input class="field" data-save><label>Veteran Number / VAC File #:</label><input class="field" data-save><label>Date of Birth:</label><input class="field" data-save><label>Phone:</label><input class="field" data-save><label>Email:</label><input class="field" data-save><label>Preferred Contact:</label><div class="checks"><label><input class="check" type="checkbox" data-save>Phone</label><label><input class="check" type="checkbox" data-save>Email</label><label><input class="check" type="checkbox" data-save>Mail</label></div></div></section>
+    <section class="box case"><h2>MY CASE MANAGER / CONTACT</h2><div class="formgrid"><label>Case Manager:</label><input class="field" data-save><label>Office / Location:</label><input class="field" data-save><label>Phone:</label><input class="field" data-save><label>Email:</label><input class="field" data-save></div></section>
+    <section class="box"><h2>MY OVERALL STATUS</h2><div class="statusbar"><label class="statusItem"><input type="radio" name="overall" data-save><div class="badge bgGreen">✓</div>On Track</label><label class="statusItem"><input type="radio" name="overall" data-save><div class="badge bgGold">◔</div>In Progress</label><label class="statusItem"><input type="radio" name="overall" data-save><div class="badge bgOrange">!</div>Action<br>Needed</label><label class="statusItem"><input type="radio" name="overall" data-save><div class="badge bgRed">⬡</div>Delayed /<br>Blocked</label><label class="statusItem"><input type="radio" name="overall" data-save><div class="badge bgPurple">★</div>Needs<br>Review</label></div></section>
+    <section class="box dateBox"><h2>TODAY'S DATE</h2><div class="dateHint">YYYY - MM - DD</div><input class="field" data-save></section>
+  </div>
+</header>
+<section class="middle">
+  <section class="box redBox benefits"><div class="benefitHead"><div><h2>MY BENEFITS &amp; SERVICES TRACKER</h2><div class="sub">List of programs from Board 1 (use Program Code)</div></div><div class="legend"><span><i class="dot c1"></i>Not Started</span><span><i class="dot c2"></i>In Progress</span><span><i class="dot c3"></i>Submitted</span><span><i class="dot c4"></i>Approved</span><span><i class="dot c5"></i>Denied</span><span><i class="dot c6"></i>Complete</span></div></div><table class="benefitTable"><thead><tr><th class="code">PROG.<br>CODE</th><th class="prog">PROGRAM / SERVICE</th><th class="stat"></th><th class="stat"></th><th class="stat"></th><th class="stat"></th><th class="stat"></th><th class="stat"></th></tr></thead><tbody id="benefitRows"></tbody></table><div class="addline">Add more programs / notes: <input class="field" data-save style="width:340px"></div><div class="noteLines"></div></section>
+  <section class="box docs"><h2>DOCUMENT CHECKLIST</h2><div class="sub">Track the documents you need or have submitted</div><table class="docTable"><thead><tr><th class="docName">DOCUMENT</th><th>NEEDED</th><th>SUBMITTED</th><th>APPROVED</th><th>NOTES</th></tr></thead><tbody id="docRows"></tbody></table></section>
+  <section class="box appt"><h2>APPOINTMENTS &amp; FOLLOW-UPS</h2><div class="sub">Keep track of your appointments and follow-ups</div><table class="apptTable"><thead><tr><th style="width:76px">DATE</th><th style="width:130px">TYPE / WITH</th><th>PURPOSE</th><th style="width:58px">STATUS</th><th style="width:114px">NOTES</th></tr></thead><tbody id="apptRows"></tbody></table><div class="follow">Next Important Follow-Up: <input data-save style="width:190px"> &nbsp;&nbsp; Date: <input data-save style="width:110px"></div></section>
+</section>
+<section class="lower">
+  <section class="box tealBox"><h2>MY NEXT ACTIONS</h2><div class="sub">What I need to do next</div><div class="actionTable" id="actionGrid"></div></section>
+  <section class="box tealBox notes"><h2>NOTES / QUESTIONS / IDEAS</h2><div class="sub">Use this space to write anything important</div><div class="ghostLeaf">🍁</div><div class="ghostFam">♟♙</div><div class="noteArea"><textarea data-save></textarea></div></section>
+  <section class="box tealBox"><h2>IMPORTANT CONTACTS</h2><div class="sub">Keep these numbers handy</div><div class="contactList"><span class="contactIcon">☎</span>VAC Call Centre: <span style="float:right">1-866-522-2122</span><br><span class="contactIcon">🎧</span>Mental Health Support: <span style="float:right">1-800-268-7708</span><br><span class="contactIcon">🌐</span>Veterans.gc.ca<br><span class="contactIcon">▣</span>Local VAC Office: <input data-save><br><span class="contactIcon">♟</span>Case Manager: <input data-save><br><span class="contactIcon">🍁</span>Legion Support: <input data-save><br><span class="contactIcon">⚠</span>Emergency (Crisis): <span style="float:right">911</span><br><span class="contactIcon">✪</span>Other: <input data-save><br><span class="contactIcon">✪</span>Other: <input data-save></div></section>
+</section>
+<footer class="footer">
+ <div class="step"><div class="num n1">1</div><h3 style="color:#078060">FIND YOUR PROGRAMS</h3><p>Use Board 1 to identify programs that may apply to you.</p><div class="bigIcon">⌕</div></div>
+ <div class="step"><div class="num n2">2</div><h3 style="color:#18518a">TRACK YOUR PROGRESS</h3><p>Mark the status of each program as you move forward.</p><div class="bigIcon">✓○○</div></div>
+ <div class="step"><div class="num n3">3</div><h3 style="color:#704895">CHECK YOUR DOCUMENTS</h3><p>Use the checklist to gather and submit what's needed.</p><div class="bigIcon">▱</div></div>
+ <div class="step"><div class="num n4">4</div><h3 style="color:#db5a13">TAKE ACTION</h3><p>Focus on your next steps and follow-up appointments.</p><div class="bigIcon">▣</div></div>
+ <div class="step"><div class="num n5">5</div><h3 style="color:#078060">KEEP MOVING FORWARD</h3><p>Small steps today lead to a stronger tomorrow.</p><div class="bigIcon">▟▆▃</div></div>
+ <div class="thanks">🍁<br>THANK YOU FOR YOUR SERVICE.<br>WE ARE HERE FOR YOU.<div class="family">♟♟♙♙</div></div>
+</footer>
+</main></div>
+<script>
+const benefits=[['C-01','Disability Benefits'],['C-02','Disability Pension (RCMP)'],['C-03','Additional Pain & Suffering Compensation'],['C-04','Critical Injury Benefit'],['C-05','Exceptional Incapacity Allowance (EIA)'],['C-06','Attendance Allowance'],['C-07','Clothing Allowance'],['H-01','Treatment Benefits'],['H-02','Health-Related Travel Expenses'],['H-03','Mental Health Support (1-800-268-7708)'],['I-01','Canadian Forces Income Support'],['I-02','Income Replacement Benefit (IRB)'],['I-03','War Veterans Allowance (WVA)'],['I-04','Long-Term Care'],['E-01','Education & Training Benefit'],['E-02','Career Transition Services'],['E-03','Federal Public Service Hiring Preference'],['HOM-01','Veterans Independence Program (VIP)'],['HOM-02','Home Adaptations'],['HOM-03','Assistive Devices & Equipment'],['FAM-01','Survivor Pension'],['FAM-02','Family Caregiver Recognition Benefit'],['FAM-03','Death Benefit'],['FAM-04','Education Benefit for Children'],['CR-01','Talk to a Mental Health Professional'],['CR-02','Veterans Emergency Fund'],['CR-03','Homelessness Prevention Support'],['CR-04','Suicide Prevention Support'],['M-01','Funeral & Burial Benefit'],['M-02','Grave Maintenance Benefit'],['M-03','Memorial Items']];
+const statusColors=['c1','c2','c3','c4','c5','c6'];
+benefitRows.innerHTML=benefits.map((r,i)=>`<tr><td class="code" style="color:${r[0].startsWith('C')||r[0].startsWith('FAM')||r[0].startsWith('CR')?'#d8291c':r[0].startsWith('HOM')?'#00847d':r[0].startsWith('H')?'#18518a':r[0].startsWith('E')?'#6d3f91':'#111'}">${r[0]}</td><td class="prog">${r[1]}</td>${statusColors.map(c=>`<td class="stat"><input class="radioDot ${c}" type="radio" name="b${i}" data-save></td>`).join('')}</tr>`).join('');
+const docs=[['▣','Service / Release Documents'],['✚','Medical Records / Reports'],['▤','Claim Application Form'],['♟','ID (Government Issued)'],['♞','Direct Deposit Information'],['✪','Proof of Income (if required)'],['♣','Marriage Certificate (if applicable)'],['♟♟','Dependent Children Documents'],['▤','Other:'],['▤','Other:']];
+docRows.innerHTML=docs.map(d=>`<tr><td class="docName"><span class="docIcon">${d[0]}</span>${d[1]} ${d[1]=='Other:'?'<input class="field" data-save style="width:88px">':''}</td><td style="text-align:center"><input type="checkbox" class="sq" data-save></td><td style="text-align:center"><input type="checkbox" class="sq" data-save></td><td style="text-align:center"><input type="checkbox" class="sq" data-save></td><td><input class="notesInput" data-save></td></tr>`).join('');
+const marks=['○','◔','✓','!','○','◔','✓','◔','○'];const markColors=['c3','c2','c4','c5','c3','c2','c4','c2','c4'];
+apptRows.innerHTML=Array.from({length:9},(_,i)=>`<tr><td><input data-save></td><td><input data-save></td><td><input data-save></td><td><span class="statusMark ${markColors[i]}">${marks[i]}</span></td><td><input data-save></td></tr>`).join('');
+let g=['<div class="headCell">PRIORITY</div><div class="headCell">ACTION</div><div class="headCell">DUE DATE</div><div class="headCell">DONE</div>'];
+['HIGH','HIGH','HIGH','MEDIUM','MEDIUM','MEDIUM','LOW','LOW','LOW'].forEach((p,i)=>g.push(`<div class="prio ${p.toLowerCase()}">${i%3==0?p:''}</div><div><input class="cellInput" data-save></div><div><input class="cellInput" placeholder="__/__/__" data-save></div><div class="doneCell"><input type="checkbox" data-save></div>`));actionGrid.innerHTML=g.join('');
+const els=[...document.querySelectorAll('[data-save]')];const saved=JSON.parse(localStorage.getItem('votbVacV7')||'{}');els.forEach((el,i)=>{if(saved[i]!==undefined){if(el.type==='checkbox'||el.type==='radio')el.checked=saved[i];else el.value=saved[i]}el.addEventListener('input',save);el.addEventListener('change',save)});function save(){const o={};els.forEach((el,i)=>o[i]=(el.type==='checkbox'||el.type==='radio')?el.checked:el.value);localStorage.setItem('votbVacV7',JSON.stringify(o));}
+</script>
+</body>
+</html>
